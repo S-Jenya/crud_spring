@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="UTF-8">
+<title>Update user</title>
+</head>
+    <body>
+        <p><h1>Обновить данные пользоватедя</h1></p>
+        <form action="#" th:action="@{/user-update}" th:object="${user}" method="post">
+            <label for="id">ID</label>
+            <input readonly type="number" th:field="*{id_user}" id="id" placeholder="ID">
+
+
+            <label for="nameUser">First name</label>
+            <input type="text" th:field="*{name}" id="nameUser" placeholder="Имя">
+
+            <p>
+                <input type="submit" value="Обновить" />
+                <input type="submit" onclick="javascript:history.back(); return false;" value="Отменить">
+            </p>
+        </form>
+    </body>
+</html>
