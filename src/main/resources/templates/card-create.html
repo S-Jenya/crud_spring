@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create card</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container{
+            width: 50%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .edu_case{
+            margin: 5px;
+        }
+        .btn_control{
+            padding-top: 20px;
+        }
+        #edu_fields {
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p><h1>Добавить карточку</h1></p>
+
+        <form action="#" th:action="@{/new-card}" th:object="${card}" method="POST">
+            <p>Заголовок: <input type="text" name="first_name" size="40"></p>
+
+            <p>Данные об образовании:</p>
+            <div id="edu_fields"></div>
+            <input type="submit" id="addEdu" value="Добавить">
+
+            <div id="responsecontainer"></div>
+
+            <p>
+            <div class="btn_control">
+                <input type="submit" name="btn_add" value="Сохранить">
+                <input type="submit" onclick="javascript:history.back(); return false;" value="Отмена">
+            </div>
+            </p>
+        </form>
+
+    </div>
+
+    <script>
+
+        countEdu = $('#edu_fields').children().length;
+
+        function btn_del(count) {
+            console.log("Фукция вызвана");
+            $('#edu'+count).remove();
+            countEdu--;
+            console.log("После удаления = " + countEdu);
+            return false;
+        }
+
+        $(document).ready(function(){
+            console.log('Document ready called');
+
+            $('#addEdu').click(function(event){
+                event.preventDefault();
+                if ( countEdu >= 9 ) {
+                    alert("Максимальное число учреждений 9шт.");
+                    return;
+                }
+                countEdu++;
+                console.log("После добавления = ", countEdu);
+
+                var HTMLcode =  '<div class="edu_case">\
+                                      <div id="edu'+countEdu+'" style="background-color: #FFF8DC; margin-top: 15px; padding: 10px;"> \
+                                        <p>Год окончания: <input type="text" name="edu_year'+countEdu+'" value="" /> \
+                                        <input type="button" value="Удалить" onclick="btn_del('+countEdu+');"><br></p> \
+                                      </div> \
+                                    </div>';
+                $('#edu_fields').append(HTMLcode);
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

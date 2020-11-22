@@ -32,4 +32,8 @@ public class UserService {
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
+
+    public void updUserName(String userName, Long userId){
+        userRepository.updUser(userName, userId);
+    }
 }
