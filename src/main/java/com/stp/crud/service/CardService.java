@@ -3,7 +3,6 @@ package com.stp.crud.service;
 import com.stp.crud.model.Card;
 import com.stp.crud.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +32,9 @@ public class CardService {
 
     public void deleteById(Long id) {
         cardRepository.deleteById(id);
+    }
+
+    public List<Card> selectCardFromUser(Long id){
+        return cardRepository.findCardByUserIdCustomQuery(id);
     }
 }

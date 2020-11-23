@@ -25,6 +25,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<User> customSelect(){
+        return userRepository.findAllByCustomQuery();
+    }
+
     public User saveUser(User user){
         return userRepository.save(user);
     }

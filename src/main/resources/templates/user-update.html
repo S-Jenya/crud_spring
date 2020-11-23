@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <meta charset="UTF-8">
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
@@ -12,19 +11,10 @@
         <div class="container">
             <p><h1>Обновить данные пользоватедя</h1></p>
             <form action="#" th:action="@{/user-update}" th:object="${user}" method="post">
-                <p>
-                    <label for="id_user">ID</label>
-                    <input readonly type="number" th:field="*{id_user}" id="id_user" placeholder="ID">
-                </p>
-
+                <input type="hidden" th:field="*{id_user}" id="id_user">
                 <p>
                     <label for="name">Имя пользователя</label>
                     <input type="text" th:field="*{name}" id="name" placeholder="Имя">
-                </p>
-
-                <p>
-                    <label for="password">Имя пользователя</label>
-                    <input type="text" th:field="*{password}" id="password" placeholder="Пароль">
                 </p>
 
                 <p>

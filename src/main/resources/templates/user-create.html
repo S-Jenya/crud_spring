@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Create user</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
     <body>
-    <p><h1>Новый пользователь</h1></p>
-        <form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
-            <p>
-                <label for="firstName">First name</label>
-                <input type="text" th:field="*{name}" id="firstName" placeholder="First Name">
-            </p>
+        <div class="container">
+            <p><h1>Новый пользователь</h1></p>
+            <form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
+                <p>
+                    <label for="name">Имя пользователя</label>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Имя">
+                </p>
 
-            <p>
-                <label for="lastName">Last name</label>
-                <input type="password" th:field="*{password}" id="lastName"  placeholder="Last Name">
-            </p>
+                <p>
+                    <label for="password">Пароль</label>
+                    <input type="password" th:field="*{password}" id="password"  placeholder="Пароль">
+                </p>
 
-            <p>
-                <input type="submit" value="Создать" />
-                <input type="submit" onclick="javascript:history.back(); return false;" value="Отменить">
-            </p>
-        </form>
+                <p>
+                    <input type="submit" value="Создать" />
+                    <input type="submit" onclick="javascript:history.back(); return false;" value="Отменить">
+                </p>
+            </form>
+        </div>
     </body>
 </html>

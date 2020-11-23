@@ -7,11 +7,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying(clearAutomatically = true)
-    @Query("update User u set u.name =: name where u.id_user =: id_user")
-    void updUser(@Param("name") String userName, @Param("id_user") Long userId);
+    @Transactional
+    @Query("update User u set u.name = ?1 where u.id_user = ?2")
+    void updUser(String userName, Long userId);
+
+//    @Modifying(clearAutomatically = true)
+//    @Transactional
+//    @Query("update User u set u.name =: name where u.id_user =: id_user")
+//    void updUser(@Param("name") String userName, @Param("id_user") Long userId);
+
+
+    @Query("select u from User u")
+    List<User> findAllByCustomQuery();
 
 }
