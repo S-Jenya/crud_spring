@@ -37,4 +37,8 @@ public class CardService {
     public List<Card> selectCardFromUser(Long id){
         return cardRepository.findCardByUserIdCustomQuery(id);
     }
+
+    public List<Card> selectTwoFromUser(Long id){
+        return cardRepository.findTwoCustomQuery(id);
+    }
 }

@@ -1,24 +1,28 @@
 package com.stp.crud.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 @Data
+@ToString(exclude = "cards")
 @Entity
-@Table(name = "card")
+@Table(name = "institution")
 public class Institution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "institution_id")
     private Long id;
 
-    public void setCards(Set<Card> cards) {
+    public void List(List<Card> cards) {
         this.cards = cards;
     }
 
-    public Set<Card> getCards() {
+    public List<Card> getCards() {
         return cards;
     }
 
@@ -28,8 +32,8 @@ public class Institution {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "institutions")
-    private Set<Card> cards;
+    @ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "institutions")
+    private List<Card> cards;
 
     public Institution() {    }
     public Institution(Long id, String name) {
@@ -42,6 +46,6 @@ public class Institution {
     }
 
     public String toString() {
-        return "Id: " + this.id + ";name: " + this.name;
+        return "Наименование: " + this.name;
     }
 }

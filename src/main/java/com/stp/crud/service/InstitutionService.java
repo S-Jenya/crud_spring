@@ -28,4 +28,8 @@ public class InstitutionService {
     public List<Institution> selectInstFromCard(Long id){
         return institutionRepository.findInstFromCardCustomQuery(id);
     }
+
+    public List<Institution> selectInstByIdCard(Long id){
+        return institutionRepository.selectInstByIdCard(id);
+    }
 }

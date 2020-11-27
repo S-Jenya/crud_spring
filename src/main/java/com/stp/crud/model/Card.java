@@ -1,16 +1,23 @@
 package com.stp.crud.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
+@ToString(exclude = "institutions")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "card")
 public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_card")
     private Long id_card;
 
     public String getHeadline() {
@@ -29,13 +36,13 @@ public class Card {
             joinColumns = { @JoinColumn(name = "card_id") },
             inverseJoinColumns = { @JoinColumn(name = "institution_id") }
     )
-    private Set<Institution> institutions;
+    private List<Institution> institutions;
 
-    public Set<Institution> getInstitutions() {
+    public List<Institution> getInstitutions() {
         return institutions;
     }
 
-    public void setInstitutions(Set<Institution> institutions) {
+    public void setInstitutions(List<Institution> institutions) {
         this.institutions = institutions;
     }
 
