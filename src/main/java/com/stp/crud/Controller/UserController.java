@@ -52,7 +52,7 @@ public class UserController  {
     @GetMapping("user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         User user = userService.findById(id);
-//
+
         if(user.getCards().size() > 0){
             for(Card card: user.getCards()){
                 cardService.deleteById(card.getId_card());
