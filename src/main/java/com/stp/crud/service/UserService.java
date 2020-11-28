@@ -21,10 +21,6 @@ public class UserService {
         return userRepository.getOne(id);
     }
 
-    public List<User> findAll(){
-        return userRepository.findAll();
-    }
-
     public List<User> customSelect(){
         return userRepository.findAllByCustomQuery();
     }

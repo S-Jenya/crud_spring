@@ -1,17 +1,10 @@
 package com.stp.crud.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
-@Data
 @Entity
-@ToString(exclude = "institutions")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "card")
 public class Card {
 
@@ -46,8 +39,29 @@ public class Card {
         this.institutions = institutions;
     }
 
+    public void setId_card(Long id_card) {
+        this.id_card = id_card;
+    }
+
     public Long getId_card() {
         return id_card;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public void setIdNyll() {
+        this.id_card = null;
     }
 
     public String toString() {

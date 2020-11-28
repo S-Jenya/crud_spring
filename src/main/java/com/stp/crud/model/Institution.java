@@ -6,10 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
-@Data
-@ToString(exclude = "cards")
 @Entity
 @Table(name = "institution")
 public class Institution {
@@ -17,10 +14,6 @@ public class Institution {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "institution_id")
     private Long id;
-
-    public void List(List<Card> cards) {
-        this.cards = cards;
-    }
 
     public List<Card> getCards() {
         return cards;
@@ -45,7 +38,11 @@ public class Institution {
         return name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String toString() {
-        return "Наименование: " + this.name;
+        return this.name;
     }
 }

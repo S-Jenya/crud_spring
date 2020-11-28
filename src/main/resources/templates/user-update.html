@@ -11,10 +11,10 @@
         <div class="container">
             <p><h1>Обновить данные пользоватедя</h1></p>
             <form action="#" th:action="@{/user-update}" th:object="${user}" method="post">
-                <input type="hidden" th:field="*{id_user}" id="id_user">
+                <input type="hidden" th:field="*{id_user}" name="id_user" id="id_user">
                 <p>
                     <label for="name">Имя пользователя</label>
-                    <input type="text" th:field="*{name}" id="name" placeholder="Имя">
+                    <input type="text" th:value="*{name}" name="name" id="name" placeholder="Имя">
                 </p>
 
                 <p>

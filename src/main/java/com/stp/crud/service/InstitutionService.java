@@ -17,10 +17,6 @@ public class InstitutionService {
         this.institutionRepository = institutionRepository;
     }
 
-    public Institution findById(Long id){
-        return institutionRepository.getOne(id);
-    }
-
     public List<Institution> findAll(){
         return institutionRepository.findAll();
     }
@@ -28,6 +24,11 @@ public class InstitutionService {
     public List<Institution> selectInstFromCard(Long id){
         return institutionRepository.findInstFromCardCustomQuery(id);
     }
+
+    public void deleteById(Long id) {
+        institutionRepository.deleteById(id);
+    }
+
 
     public List<Institution> selectInstByIdCard(Long id){
         return institutionRepository.selectInstByIdCard(id);

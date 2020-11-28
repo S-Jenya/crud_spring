@@ -33,22 +33,30 @@
             <ul>
                 <li>Name: <label th:text="${user.name}"></label> </li>
                 <li>Password: <label th:text="${user.password}"></label></li>
-                <li><p>Карточки: <a class="button" href="/card-create">Добавить карточку</a> </p></li>
+                <li><p>Карточки: <a class="button" th:href="@{/card-create/{id}(id=${user.id_user})}">Добавить карточку</a> </p></li>
 
                 <div id="card_doby">
                     <tr th:each="card : ${card}" >
                         <div class="row">
                             <div class="col-10">
                                 <div class="card" style="width: 300px;">
+
                                     <div class="card-body">
-                                        <h5 class="card-title" th:text="${card.headline}"></h5>
+
+                                        <form th:action="@{/del-card}" method="post">
+                                            <button type="submit" class="close" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <label for="idCard"></label>
+                                            <input type="hidden"  th:value="*{card.id_card}" name="idCard" id="idCard"> </input>
+                                            <h5 class="card-title" id="name" th:text="${card.headline}"></h5> <p><a th:href="@{/card-update/{id}(id=${card.id_card})}"> Edit </a></p>
+                                        </form>
 
                                         <table th:each="inst : ${card.institutions}">
-                                            <label th:text="${inst}"></label>
+                                            <label th:text="${inst}"></label>  <a th:href="@{/inst-update/{id}( id=${card.id_card}, old_name=${inst} ) }"> Edit </a> <a  th:href="@{/inst-del/{id}( id=${card.id_card}, old_name=${inst} ) }" > Del </a>
                                         </table>
 
-                                        <a href="#" class="btn btn-primary linkCard" th:href="@{'/index/modal'}">Добавить</a>
-                                        <a href="#" class="btn btn-primary linkCard" th:href="@{'/index/modal'}">Редактировать</a>
+                                        <a href="#" class="btn btn-primary linkCard" th:href="@{/inst-create/{id}(id=${card.id_card})}">Добавить институт</a>
                                     </div>
                                 </div>
                             </div>
@@ -60,31 +68,7 @@
         </div>
     </div>
     <input type="submit" onclick="javascript:history.back(); return false;" value="Назад">
-
-
-    <div class="modal" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-            </div>
-        </div>
-    </div>
-
 </div>
-
-<script>
-    $(document).ready(function() {
-        $(".linkCard").on("click", function(e){
-            console.log('I am hear');
-            e.preventDefault();
-            // var url = $(this).find("a").data("url");
-            var url =  $(this).attr('href');
-            console.log(url);
-            $("#myModal").modal("show").find(".modal-content").load($(this).attr('href'));
-        });
-    });
-</script>
-
 
 </body>
 </html>

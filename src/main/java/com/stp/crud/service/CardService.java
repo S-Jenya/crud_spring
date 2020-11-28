@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-//@EnableJpaRepositories("com.stp.crud.repository")
 public class CardService {
 
     private final CardRepository cardRepository;
@@ -20,10 +19,6 @@ public class CardService {
 
     public Card findById(Long id){
         return cardRepository.getOne(id);
-    }
-
-    public List<Card> findAll(){
-        return cardRepository.findAll();
     }
 
     public Card saveCard(Card card){
@@ -40,5 +35,9 @@ public class CardService {
 
     public List<Card> selectTwoFromUser(Long id){
         return cardRepository.findTwoCustomQuery(id);
+    }
+
+    public void updCard(String name, Long id){
+        cardRepository.updCard(name, id);
     }
 }
