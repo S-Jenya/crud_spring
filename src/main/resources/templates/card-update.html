@@ -2,23 +2,23 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Inst card</title>
+    <title>Create card</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div class="container">
-    <p><h1>Новое учебное учреждение</h1></p>
+    <p><h1>Редактировать карточку</h1></p>
 
-    <form th:action="@{/create-inst}" method="post">
+    <form th:action="@{/update-card}" method="post">
         <label for="iduser"></label>
         <input type="hidden" name="id" id="iduser" th:value="${card.id_card}">
         <p>
-            <label for="name">Наименование: </label>
-            <input type="text"  name="name" id="name">
+            <label for="name">Наименование карточки: </label>
+            <input type="text" name="name" id="name">
         </p>
 
         <p>
-            <input type="submit" value="Создать" />
+            <input type="submit" value="Обновить" />
             <input type="submit" onclick="javascript:history.back(); return false;" value="Отменить">
         </p>
 

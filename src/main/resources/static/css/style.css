@@ -4,6 +4,10 @@ body{
     justify-content: center;
 }
 
+.row {
+    padding-bottom: 10px;
+}
+
 .container{
     width: 70%;
     padding-right: 15px;

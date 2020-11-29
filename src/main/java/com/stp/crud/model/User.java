@@ -1,15 +1,9 @@
 package com.stp.crud.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@ToString(exclude = "cards")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Table(name = "user")
 public class User {
     @Id
@@ -39,6 +33,18 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Card> cards;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String toString() {
         return "Id: " + this.id_user + " name: " + this.name + "; password: " + this.password;

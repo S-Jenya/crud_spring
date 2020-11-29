@@ -9,9 +9,7 @@ import com.stp.crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +40,24 @@ public class UserController  {
         return "user-create";
     }
 
-    @PostMapping("/user-create")
-    public String createUser(User user) {
+    @RequestMapping(value="/user-create", method= RequestMethod.POST)
+    public String createUser(@RequestParam("name") String name, @RequestParam("password") String password){
+        User user = new User();
+        user.setName(name);
+        user.setPassword(password);
         userService.saveUser(user);
-        return "redirect:/user";
+        return "redirect:user";
     }
 
     @GetMapping("user-delete/{id}")
-    public String deleteUser(
-            @PathVariable("id") Long id
-    ) {
+    public String deleteUser(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+
+        if(user.getCards().size() > 0){
+            for(Card card: user.getCards()){
+                cardService.deleteById(card.getId_card());
+            }
+        }
         userService.deleteById(id);
         return "redirect:/user";
     }
@@ -60,18 +66,7 @@ public class UserController  {
     public String userInfoForm(@PathVariable("id") Long id, Model model) {
         User user = userService.findById(id);
         List<Card> card = cardService.selectCardFromUser(id);
-        ArrayList<ArrayList<String>> listOLists = new ArrayList<ArrayList<String>>();
-        for(Card card1: card){
-            List<Institution> list2 = new ArrayList<Institution>();
-            list2 = institutionService.selectInstFromCard(card1.getId_card());
-            ArrayList<String> singleList = new ArrayList<String>();
-            for(Institution instFor: list2 ){
-                singleList.add(instFor.getName());
-            }
-            listOLists.add(singleList);
-        }
         model.addAttribute("card", card);
-        model.addAttribute("inst", listOLists);
         model.addAttribute("user", user);
         return "/user-info";
     }
@@ -83,17 +78,10 @@ public class UserController  {
         return "/user-update";
     }
 
-    @PostMapping("/user-update")
-    public String updateUser(/*@ModelAttribute*/ User user){
-//        userService.saveUser(user);
-        userService.updUserName(user.getName(), user.getId_user());
+    @RequestMapping(value="/user-update", method= RequestMethod.POST)
+    public String updateUser(@RequestParam("id_user")  Long id, @RequestParam("name") String name){
+        userService.updUserName(name, id);
         return "redirect:/user";
     }
 
-    @GetMapping("/index/modal")
-    public String pagescard(Model model){
-//        model.addAttribute("cards", cards);
-//        model.addAttribute("vzamen", vzamen);
-        return "modal";
-    }
 }
