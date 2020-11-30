@@ -1,9 +1,12 @@
 package com.stp.crud.model;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "card")
 public class Card {

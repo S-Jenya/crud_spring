@@ -1,8 +1,11 @@
 package com.stp.crud.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "user")
 public class User {
