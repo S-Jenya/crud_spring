@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create card</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="container">
+        <p><h1>Добавить карточку</h1></p>
+
+        <form th:action="@{/new-card}" method="post">
+            <label for="iduser"></label>
+            <input type="hidden" name="id" id="iduser" th:value="${card.id_user}">
+            <p>
+                <label for="name">Наименование карточки: </label>
+                <input type="text" name="name" id="name">
+            </p>
+
+            <p>
+                <input type="submit" value="Создать" />
+                <input type="submit" onclick="javascript:history.back(); return false;" value="Отменить">
+            </p>
+
+        </form>
+
+    </div>
+</body>
+</html>

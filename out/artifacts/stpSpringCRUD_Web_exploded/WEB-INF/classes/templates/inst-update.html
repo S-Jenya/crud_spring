@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Inst update</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="container">
+        <p><h1>Редактирование учебного учреждения</h1></p>
+
+        <form th:action="@{/update-inst}" method="post">
+            <label for="iduser"></label>
+            <input type="hidden" name="id" id="iduser" th:value="${card.id_card}">
+
+            <label for="oldName"></label>
+            <input type="hidden" name="oldName" id="oldName" th:value="${inst}">
+
+            <p>
+                <label for="name">Наименование: </label>
+                <input type="text" th:value="${inst}" name="name" id="name">
+            </p>
+
+            <p>
+                <input type="submit" value="Обновить" />
+                <input type="submit" onclick="javascript:history.back(); return false;" value="Отменить">
+            </p>
+
+        </form>
+
+    </div>
+</body>
+</html>
