@@ -70,7 +70,7 @@ public class InstitutionController {
             return "redirect:user";
         }
 
-        /* Удаляем из коллекции старок имя */
+        /* Удаляем из коллекции старое имя */
         for(Institution institution: card.getInstitutions()){
             if(institution.getName().equals(oldName)){
                 card.getInstitutions().remove(institution);
@@ -87,8 +87,13 @@ public class InstitutionController {
             newInst.setName(name);
             card.addNewInst(newInst);
         }
-
         cardService.saveCard(card);
+
+        inst = institutionService.selectInstByName(oldName);
+        if(inst.getCards().size() == 0){
+            institutionService.deleteById(inst.getId());
+        }
+
         return "redirect:user";
     }
 

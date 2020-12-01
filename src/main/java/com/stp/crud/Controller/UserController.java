@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController  {
@@ -52,13 +54,29 @@ public class UserController  {
     @GetMapping("user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         User user = userService.findById(id);
+        List<Card> cards = new ArrayList<Card>();
+        cards = cardService.selectCardByUserId(user.getId_user());
+        Set<String> instNameInCard = new HashSet<String>();
 
-        if(user.getCards().size() > 0){
-            for(Card card: user.getCards()){
-                cardService.deleteById(card.getId_card());
+        for(Card card: cards){
+            for(Institution institution: card.getInstitutions()){
+                instNameInCard.add(institution.getName());
+            }
+            card.cleanInstList();
+            cardService.saveCard(card);
+            cardService.deleteById(card.getId_card());
+        }
+
+        userService.deleteById(id);
+
+        /* Выполним очистку из таблици Институты */
+        for (String oldInstName: instNameInCard){
+            Institution inst = institutionService.selectInstByName(oldInstName);
+            if(inst.getCards().size() == 0){
+                institutionService.deleteById(inst.getId());
             }
         }
-        userService.deleteById(id);
+
         return "redirect:/user";
     }
 

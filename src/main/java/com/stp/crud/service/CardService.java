@@ -33,8 +33,8 @@ public class CardService {
         return cardRepository.findCardByUserIdCustomQuery(id);
     }
 
-    public List<Card> selectTwoFromUser(Long id){
-        return cardRepository.findTwoCustomQuery(id);
+    public List<Card> selectCardByUserId(Long id){
+        return cardRepository.findCardCustomQuery(id);
     }
 
     public void updCard(String name, Long id){

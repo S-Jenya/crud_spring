@@ -21,6 +21,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     void updCard(String newName, Long cardId);
 
     @Query("select card from Card card where card.user.id_user = ?1")
-    List<Card> findTwoCustomQuery(Long userId);
+    List<Card> findCardCustomQuery(Long userId);
 
 }
