@@ -16,10 +16,6 @@ public class Card {
     @Column(name = "id_card")
     private Long id_card;
 
-    public String getHeadline() {
-        return headline;
-    }
-
     private String headline;
 
     @ManyToOne
@@ -36,6 +32,10 @@ public class Card {
 
     public List<Institution> getInstitutions() {
         return institutions;
+    }
+
+    public String getHeadline() {
+        return headline;
     }
 
     public void setInstitutions(List<Institution> institutions) {
@@ -62,6 +62,41 @@ public class Card {
         this.user = user;
     }
 
+    public void addNewInst(Institution institution){
+        this.institutions.add(institution);
+    }
+
+    public void delInstFromList(Institution institution){
+        this.institutions.remove(institution);
+    }
+
+    public void delInstByIndexFromList(Integer index){
+        this.institutions.remove(index);
+    }
+
+    public void cleanInstList(){
+        this.institutions.clear();
+    }
+
+    public boolean findInListByInstName(Card card, String name){
+        for(Institution inst: card.getInstitutions()){
+            if(inst.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Integer getIndexInst(Card card, String name){
+        Integer index = 0;
+        for(Institution inst: card.getInstitutions()){
+            if(inst.getName().equals(name)){
+                return index;
+            }
+            index++;
+        }
+        return index;
+    }
 
     public void setIdNyll() {
         this.id_card = null;

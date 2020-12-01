@@ -22,4 +22,12 @@ public class InstitutionService {
     public List<Institution> selectInstByIdCard(Long id){
         return institutionRepository.selectInstByIdCard(id);
     }
+
+    public Institution selectInstByName(String name){
+        return institutionRepository.selectInstByName(name);
+    }
+
+    public void deleteById(Long id) {
+        institutionRepository.deleteById(id);
+    }
 }

@@ -20,6 +20,7 @@ public class Institution {
         return cards;
     }
 
+    @Column(unique = true)
     private String name;
 
     public void setName(String name) {

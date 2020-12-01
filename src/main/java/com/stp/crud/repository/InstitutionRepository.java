@@ -17,4 +17,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     @Query("select inst from Institution inst join Card card where card.id_card = ?1")
     List<Institution> selectInstByIdCard(Long userId);
 
+    @Query("select inst from Institution inst where inst.name = ?1")
+    Institution selectInstByName(String name);
+
 }

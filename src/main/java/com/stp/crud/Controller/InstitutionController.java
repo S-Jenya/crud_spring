@@ -35,16 +35,20 @@ public class InstitutionController {
     @RequestMapping(value="/create-inst", method= RequestMethod.POST)
     public String updateCard(@RequestParam("id") Long id, @RequestParam("name") String name){
         Card card = cardService.findById(id);
-        List<Institution> inst = new ArrayList<Institution>();
-        Institution institution = new Institution();
 
-        for (Institution institution1: card.getInstitutions()){
-            inst.add(institution1);
+        if(card.findInListByInstName(card, name)){
+            return "redirect:user";
         }
 
-        institution.setName(name);
-        inst.add(institution);
-        card.setInstitutions(inst);
+        Institution inst = institutionService.selectInstByName(name);
+        if(inst != null) {  /*уже существует*/
+            card.addNewInst(inst);
+        } else {
+            Institution newInst = new Institution();
+            newInst.setName(name);
+            card.addNewInst(newInst);
+        }
+
         cardService.saveCard(card);
         return "redirect:user";
     }
@@ -62,10 +66,26 @@ public class InstitutionController {
     public String updateInst(@RequestParam("id") Long id, @RequestParam("name") String name, @RequestParam("oldName") String oldName){
         Card card = cardService.findById(id);
 
-        for (Institution institution1: card.getInstitutions()){
-            if(institution1.getName().equals(oldName)){
-                institution1.setName(name);
+        if(card.findInListByInstName(card, name)){
+            return "redirect:user";
+        }
+
+        /* Удаляем из коллекции старок имя */
+        for(Institution institution: card.getInstitutions()){
+            if(institution.getName().equals(oldName)){
+                card.getInstitutions().remove(institution);
+                break;
             }
+        }
+
+        /* Новое имя уже существует? */
+        Institution inst = institutionService.selectInstByName(name);
+        if(inst != null) {  /*уже существует*/
+            card.addNewInst(inst);
+        } else { /* имя не существует. Создадим новый объект */
+            Institution newInst = new Institution();
+            newInst.setName(name);
+            card.addNewInst(newInst);
         }
 
         cardService.saveCard(card);
@@ -76,16 +96,20 @@ public class InstitutionController {
     public String deleteInst(@PathVariable("id") Long id, @RequestParam("old_name") String name, Model model){
         Card card = cardService.findById(id);
 
-        List<Institution> inst = new ArrayList<Institution>();
-
-        for (Institution institution1: card.getInstitutions()){
-            if(!institution1.getName().equals(name)){
-                inst.add(institution1);
+        /* Удаляем из коллекции старок имя */
+        for(Institution institution: card.getInstitutions()){
+            if(institution.getName().equals(name)){
+                card.getInstitutions().remove(institution);
+                break;
             }
         }
-
-        card.setInstitutions(inst);
         cardService.saveCard(card);
+
+        Institution inst = institutionService.selectInstByName(name);
+        if(inst.getCards().size() == 0){
+            institutionService.deleteById(inst.getId());
+        }
+
         return "redirect:/user";
     }
 
