@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
@@ -38,18 +37,15 @@
 
                 <tr th:each="card, state : ${card}">
                     <div class="card" style="margin-bottom: 20px">
-                        <div class="card-header">
-                            <h5><label>Учебное учреждение №</label> <label th:text="${state.index + 1}"></label>
-                                <button type="submit" class="close" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </h5>
-
-                        </div>
-
                         <div class="card-body"  style="padding-top: 0px;">
-
                             <form th:action="@{/del-card}" method="post">
+                                <div class="card-header">
+                                    <h5><label>Учебное учреждение №</label> <label th:text="${state.index + 1}"></label>
+                                        <button type="submit" class="close" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </h5>
+                                </div>
                                 <label for="idCard"></label>
                                 <input type="hidden" th:value="*{card.id_card}" name="idCard" id="idCard"> </input>
                                  <h5  id="name" >
@@ -58,7 +54,6 @@
                                          <a th:href="@{/card-update/{id}(id=${card.id_card})}"> Edit </a>
                                      </p>
                                  </h5>
-
                             </form>
 
                             <table th:each="inst : ${card.institutions}">
