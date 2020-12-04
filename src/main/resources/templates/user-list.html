@@ -6,6 +6,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- /Meta -->
 
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
@@ -14,28 +17,36 @@
     <body>
         <div class="container">
             <p><h1>Главная страница</h1></p>
+            <p><h6>Маленькая строчка для гита</h6></p>
             <div th:switch="${user}">
                 <h2 th:case="null">No users found!</h2>
                 <div th:case="*">
                     <h2>Users</h2>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Password</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user : ${user}">
-                            <td th:text="${user.id_user}"></td>
-                            <td ><a th:href="@{user-info/{id}(id=${user.id_user})}"><p th:text="${user.name}"></p></a></td>
-                            <td th:text="${user.password}"></td>
-                            <td><a th:href="@{user-update/{id}(id=${user.id_user})}">Edit</a></td>
-                            <td><a th:href="@{user-delete/{id}(id=${user.id_user})}">Delete</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ид</th>
+                                    <th>Имя</th>
+                                    <th>Пароль</th>
+                                    <th>Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${user}">
+                                    <td data-label="Ид" th:text="${user.id_user}"></td>
+                                    <td data-label="Имя">
+                                        <a th:text="${user.name}" th:href="@{user-info/{id}(id=${user.id_user})}"></a>
+                                    </td>
+                                    <td data-label="Пароль" th:text="${user.password}"></td>
+                                    <td data-label="Действие">
+                                        <a th:href="@{user-update/{id}(id=${user.id_user})}">Edit</a>
+                                        <a th:href="@{user-delete/{id}(id=${user.id_user})}">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <p><a href="/user-create">Create user</a></p>
             </div>
