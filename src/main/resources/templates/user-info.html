@@ -32,12 +32,15 @@
             <ul>
                 <li>Name: <label th:text="${user.name}"></label></li>
                 <li>Password: <label th:text="${user.password}"></label></li>
-                <li><p>Карточки: <a class="button" th:href="@{/card-create/{id}(id=${user.id_user})}">Добавить
-                    карточку</a></p></li>
+                <li><p>Карточки:
+                    <a class="button" th:href="@{/card-create/{id}(id=${user.id_user})}">
+                        Добавить карточку
+                    </a></p>
+                </li>
 
                 <tr th:each="card, state : ${card}">
                     <div class="card" style="margin-bottom: 20px">
-                        <div class="card-body"  style="padding-top: 0px;">
+                        <div class="card-body" style="padding-top: 0px;">
                             <form th:action="@{/del-card}" method="post">
                                 <div class="card-header">
                                     <h5><label>Учебное учреждение №</label> <label th:text="${state.index + 1}"></label>
@@ -48,12 +51,13 @@
                                 </div>
                                 <label for="idCard"></label>
                                 <input type="hidden" th:value="*{card.id_card}" name="idCard" id="idCard"> </input>
-                                 <h5  id="name" >
-                                     <p class="card-title">
-                                        Наименование: <label th:text="${card.headline}" style="margin-right: 10px;"></label>
-                                         <a th:href="@{/card-update/{id}(id=${card.id_card})}"> Edit </a>
-                                     </p>
-                                 </h5>
+                                <h5 id="name">
+                                    <p class="card-title">
+                                        Наименование: <label th:text="${card.headline}"
+                                                             style="margin-right: 10px;"></label>
+                                        <a th:href="@{/card-update/{id}(id=${card.id_card})}"> Edit </a>
+                                    </p>
+                                </h5>
                             </form>
 
                             <table th:each="inst : ${card.institutions}">

@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: s_j_n
-Build-Jdk: 1.8.0_271
-Implementation-Title: crud
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: com.stp
-Main-Class: ${start-class}
-
