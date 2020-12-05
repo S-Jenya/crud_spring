@@ -3,6 +3,7 @@ package com.stp.crud.service;
 import com.stp.crud.model.User;
 import com.stp.crud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +13,20 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void create(UserRepr userRepr) {
+        User user = new User();
+        user.setName(userRepr.getName());
+        user.setRole(userRepr.getRole());
+        user.setPassword(passwordEncoder.encode(userRepr.getPassword()));
+        userRepository.save(user);
     }
 
     public User findById(Long id){

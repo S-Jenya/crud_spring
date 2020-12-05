@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -21,4 +22,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u")
     List<User> findAllByCustomQuery();
 
+    Optional<User> findByName(String s);
+
+
+    @Query("select u from User u where u.name = ?1")
+    User findByNameCustomQuery(String s);
 }

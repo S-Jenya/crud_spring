@@ -37,16 +37,24 @@ public class UserController  {
         return "user-list";
     }
 
+    @GetMapping("/user-page")
+    public String goToUserPage(){
+        return "user-page";
+    }
+
     @GetMapping("/user-create")
     public String createUserForm(User user){
         return "user-create";
     }
 
     @RequestMapping(value="/user-create", method= RequestMethod.POST)
-    public String createUser(@RequestParam("name") String name, @RequestParam("password") String password){
+    public String createUser(@RequestParam("name") String name,
+                             @RequestParam("password") String password
+            , @RequestParam("role") String role){
         User user = new User();
         user.setName(name);
         user.setPassword(password);
+        user.setRole(role);
         userService.saveUser(user);
         return "redirect:user";
     }
