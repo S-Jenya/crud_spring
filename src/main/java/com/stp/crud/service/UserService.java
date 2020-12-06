@@ -33,6 +33,10 @@ public class UserService {
         return userRepository.getOne(id);
     }
 
+    public User findUserByName(String name){
+        return userRepository.findByNameCustomQuery(name);
+    }
+
     public List<User> customSelect(){
         return userRepository.findAllByCustomQuery();
     }

@@ -1,6 +1,5 @@
 package com.stp.crud.config;
 
-import com.stp.crud.model.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private PasswordEncoder passwordEncoder;
-
     private UserAuthService userAuthService;
 
     @Autowired
@@ -34,7 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
-
     }
 
     @Bean /* Объясним спрингу, откуда брать пользователей */
@@ -52,8 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/user-list/**").hasAuthority(Permission.ADMIN_PERMISSIONS.getPermission())
-                .antMatchers("/user-page").hasAuthority(Permission.USER_PERMISSIONS.getPermission())
+                .antMatchers("/user").hasAuthority("ADMIN")
+                .antMatchers("/user-info/**").hasAuthority("ADMIN")
+                .antMatchers("/user-create").hasAuthority("ADMIN")
+                .antMatchers("/user-update/**").hasAuthority("ADMIN")
+                .antMatchers("/user-delete/**").hasAuthority("ADMIN")
+                .antMatchers("/myPage").hasAuthority("USER")
+                .antMatchers("/card-create").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/card-update").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/card-delete").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -65,37 +69,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    /* @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.GET, "/user/**").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().defaultSuccessUrl("/welcome");
-    }
-
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.builder()
-                        .username("admin")
-                        .password(passwordEncoder().encode("admin"))
-                        .roles(Role.ADMIN.name())
-                        .build(),
-                User.builder()
-                        .username("user")
-                        .password(passwordEncoder().encode("user"))
-                        .roles(Role.USER.name())
-                        .build()
-        );
-    }
-
-    @Bean
-    protected PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }*/
 }

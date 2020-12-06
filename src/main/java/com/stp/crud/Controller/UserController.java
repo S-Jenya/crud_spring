@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,10 +38,16 @@ public class UserController  {
         return "user-list";
     }
 
-    @GetMapping("/user-page")
-    public String goToUserPage(){
+    @GetMapping("/myPage")
+    public String goToUserPage(Model model, Principal principal){
+        User user = userService.findUserByName(principal.getName());
+        List<Card> card = cardService.selectCardFromUser(user.getId_user());
+        model.addAttribute("card", card);
+        model.addAttribute("user", user);
         return "user-page";
     }
+
+
 
     @GetMapping("/user-create")
     public String createUserForm(User user){

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.naming.NameNotFoundException;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service("CustomUserDetailsService")
 public class UserAuthService implements UserDetailsService {
@@ -22,22 +23,15 @@ public class UserAuthService implements UserDetailsService {
         this.repository = repository;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 
-        User user = repository.findByNameCustomQuery(name);
-        if(user == null) {
-            throw new UsernameNotFoundException("Пользователь не найден");
-        }
-        return SecurityUser.getUser(user);
+        Optional<User> user = Optional.ofNullable(repository.findByNameCustomQuery(name));
 
-//        return repository.findByName(name)
-//                .map(user -> new User(
-//                        user.getName(),
-//                        user.getPassword(),
-//                        Collections.singletonList(new SimpleGrantedAuthority("USER"))
-//                ))
-//                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+        user.orElseThrow(() ->
+                new UsernameNotFoundException("Пользователь" + name +" не найден!"));
+
+        return user.map(MyUserDetails::new).get();
+
     }
 }
