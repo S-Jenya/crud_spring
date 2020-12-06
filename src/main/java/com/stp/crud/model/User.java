@@ -19,6 +19,15 @@ public class User {
     )
     private String name;
 
+    @Column(name = "password")
+    private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Card> cards;
+
+    @Column(name = "role")
+    private String role;
+
     public Long getId_user() {
         return id_user;
     }
@@ -30,12 +39,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-    @Column(name = "password")
-    private String password;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Card> cards;
 
     public void setName(String name) {
         this.name = name;
@@ -49,7 +52,18 @@ public class User {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String toString() {
-        return "Id: " + this.id_user + " name: " + this.name + "; password: " + this.password;
+        return "Id: " + this.id_user +
+                "; name: " + this.name +
+                "; role: " + this.role +
+                "; password: " + this.password;
     }
 }
